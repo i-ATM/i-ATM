@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Nathaniel</title>
+    <style>
+        body {
+            font-family: 'Consolas', monospace;
+            background-color: #333;
+            color: rgb(204, 204, 204);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .cmd-window {
+            background-color: rgb(12, 12, 12);
+            border: 1px solid rgb(204, 204, 204);
+            border-radius: 5px;
+            padding: 1rem;
+            width: 60%;
+            height: 90%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .cmd-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid rgb(204, 204, 204);
+            padding-bottom: 0.5rem;
+        }
+        .cmd-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            position: relative;
+        }
+        .input-area {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: rgb(204, 204, 204);
+            font-family: 'Consolas', monospace;
+        }
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+        }
+        .highlight {
+        color: rgb(0, 255, 0);
+        }
+    </style>
+</head>
+<body>
+    <div class="cmd-window">
+        <div class="cmd-title">About Me</div>
+        <div class="cmd-content">
+            <p>Welcome.
+C:\Users\Nathaniel&gt;
+C:\Users\Nathaniel&gt;General Info
+<span class="highlight">Name:</span>       Nathaniel Cheng
+<span class="highlight">Education:</span>  University of Ottawa | Canada | International Management | 2019 - 2024
+            University of Waikato | New Zealand | Exchange | 2023
+&gt; Type "help" to get a supporting command list.
+&gt; Type "clear" to clean the window.
+&gt; Type "exit" to return to main page.
+&gt; Type "about" to show more.
+            </p>
+            <p>C:\Users\Nathaniel&gt;<input type="text" class="input-area" /></p>
+        </div>
+        <span class="close-button">X</span>
+    </div>
+    <script>
+        const closeButton = document.querySelector('.close-button');
+        closeButton.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    
+        const inputArea = document.querySelector('.input-area');
+        const cmdContent = document.querySelector('.cmd-content');
+    
+        inputArea.focus();
+    
+        function handleKeydown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const inputArea = event.target;
+                const cmd = inputArea.value.trim();
+                const lastLine = cmdContent.querySelector('p:last-child');
+    
+                if (cmd === 'help') {
+                    lastLine.innerHTML += '<br><br>Available commands:<br>- help<br>- clear<br>- exit<br>- about';
+                }
+                if (cmd === 'about') {
+                    lastLine.innerHTML += '<br><br>I am a dedicated and curious International Management student with a strong interest in artificial intelligence and its applications in the global business landscape. My academic journey has equipped me with a solid understanding of global business practices, cross-cultural communication, and strategic management principles. I am particularly passionate about embracing new technologies and have been an early adopter of numerous AI products, which I believe have the potential to revolutionize the way we conduct business across borders.<br><br>During the international exchange program aboard, I have honed my adaptability and broadened my global perspective. I have also actively participated in various activities and societies, developing essential teamwork, leadership, and networking skills.<br><br>I am eager to apply my knowledge, experiences, and passion for AI to make a positive impact in the international business community. I am always open to new opportunities, collaborations, and learning experiences that will allow me to grow both personally and professionally.<br><br>Feel free to connect with me to discuss potential projects, share ideas, or explore career opportunities in the exciting world of global business and artificial intelligence.';
+                }
+                if (cmd === 'clear') {
+                cmdContent.innerHTML = '';
+                }
+
+                inputArea.value = '';
+                const newLine = document.createElement('p');
+                newLine.innerHTML = 'C:\\Users\\Nathaniel&gt;<input type="text" class="input-area" />';
+                cmdContent.appendChild(newLine);
+    
+                const newInputArea = cmdContent.querySelector('input:last-child');
+                newInputArea.focus();
+                newInputArea.addEventListener('keydown', handleKeydown);
+            }
+        }
+    
+        inputArea.addEventListener('keydown', handleKeydown);
+    </script>    
+</body>
+</html>
